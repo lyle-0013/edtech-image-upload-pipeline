@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#f3f7fb"/>
+  <path d="M160 520 L430 200 L650 460 L850 250 L1120 520" fill="none" stroke="#176b87" stroke-width="28"/>
+  <circle cx="430" cy="200" r="36" fill="#d5523f"/>
+  <circle cx="850" cy="250" r="36" fill="#e5ad35"/>
+  <text x="160" y="640" font-family="sans-serif" font-size="72" fill="#172a3a">Algebra 101</text>
+</svg>

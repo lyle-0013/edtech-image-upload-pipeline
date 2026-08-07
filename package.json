@@ -1,0 +1,19 @@
+{
+  "name": "edtech-image-upload-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "upload": "tsx src/course_image_pipeline.ts",
+    "test": "tsx --test test/course_image_pipeline.test.ts"
+  },
+  "dependencies": {
+    "sharp": "^0.34.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
