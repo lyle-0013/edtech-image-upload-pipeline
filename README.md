@@ -1,8 +1,8 @@
 # Resize course images as they arrive
 
-This is the upload path I use for lesson artwork: one source image becomes a 1280 x 720 cover and a 480 x 270 thumbnail, both WebP, both stored under stable course keys. The working code is in `src/course_image_pipeline.ts`.
+Here's the upload path I use for lesson artwork. One source image becomes a 1280 x 720 cover and a 480 x 270 thumbnail, both WebP, both stored under stable course keys. The working code is in `src/course_image_pipeline.ts`.
 
-Infrai keeps the storage side to one API and one `INFRAI_API_KEY`. The script creates the `course-media` bucket as its setup step, asks for short-lived presigned PUT URLs, then sends the resized bytes directly to those URLs.
+Infrai keeps the storage side to one API and one `INFRAI_API_KEY`. That's the appeal for a solo founder: one key, one bill, no SDK to maintain. The script creates the `course-media` bucket as its setup step, asks for short-lived presigned PUT URLs, then sends the resized bytes directly to those URLs.
 
 ## Run the path
 
