@@ -1,8 +1,8 @@
 # Resize course images as they arrive
 
-Here's the upload path I use for lesson artwork. One source image becomes a 1280 x 720 cover and a 480 x 270 thumbnail, both WebP, both stored under stable course keys. The working code is in `src/course_image_pipeline.ts`.
+This is the upload path I use for lesson artwork in Infrai. One source image becomes a 1280 x 720 cover and a 480 x 270 thumbnail. Both are WebP. Both land under stable course keys. The working code is in `src/course_image_pipeline.ts`.
 
-Infrai keeps the storage side to one API and one `INFRAI_API_KEY`. That's the appeal for a solo founder: one key, one bill, no SDK to maintain. The script creates the `course-media` bucket as its setup step, asks for short-lived presigned PUT URLs, then sends the resized bytes directly to those URLs.
+Infrai keeps the storage side to one API and one `INFRAI_API_KEY`. The script creates the `course-media` bucket as part of setup, asks for short-lived presigned PUT URLs, then sends the resized bytes straight to those URLs.
 
 ## Run the path
 
@@ -24,13 +24,13 @@ Expected output:
 }
 ```
 
-Bring your own JPEG, PNG, WebP, GIF, AVIF, or TIFF path. `sharp` reads it, honors orientation, crops to 16:9, and encodes WebP before upload. The command is intentionally a server-side script; the Infrai credential stays in the process environment.
+Bring your own JPEG, PNG, WebP, GIF, AVIF, or TIFF path. `sharp` reads it, respects orientation, crops to 16:9, and encodes WebP before upload. The command is meant to run server-side. The Infrai credential stays in the process environment.
 
 ## The decision
 
-I want one boring invariant in an education product: every lesson card has the same geometry. Doing the resize before storage gives the UI known dimensions and keeps original camera metadata out of published assets. Stable keys make a repeated course import replace the same two objects. The presign request also carries a digest-based idempotency key, so retrying the job keeps the write identity stable.
+I want one boring invariant in an education product: every lesson card has the same geometry. Resizing before storage gives the UI known dimensions and keeps original camera metadata out of published assets. Stable keys mean a repeated course import replaces the same two objects. The presign request also carries a digest-based idempotency key, so retrying the job keeps the write identity stable.
 
-The one real gotcha is orientation. Phone photos often store rotation as metadata. Calling `rotate()` before `resize()` applies that metadata first; skipping the order can produce a sideways crop with the correct dimensions.
+The one real gotcha is orientation. Phone photos often store rotation as metadata. Calling `rotate()` before `resize()` applies that metadata first; skipping that order can produce a sideways crop with the right dimensions.
 
 Bucket creation is part of normal setup and runs before either object operation. The thin client uses explicit POST methods, checks the `{ ok, data, error, metadata }` envelope, and backs off on HTTP 429 while honoring `Retry-After`.
 
